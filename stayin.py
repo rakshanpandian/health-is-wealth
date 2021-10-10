@@ -11,6 +11,10 @@ tomato=3
 gt=0
 dirt=0
 cat="not there"
+roaches="not here"
+f="nothing"
+h="nothing"
+cockroaches=-1
 event=random.randint(1,6)
 if event==1:
     event="cockroach"
@@ -26,10 +30,13 @@ if event==4:
     cat="gone"
 hunger=100
 fms="clean"
+gs="clean"
 guard=1
+hunger=100
 mhealth=100
+food=0
 phealth=100
-timing=600
+timing=6000
 morningmed=0
 afternoonmed=0
 nightmed=0
@@ -39,9 +46,12 @@ print("your stuff:a facemask, gloves and medication", "you have covid 19 and you
 die="false"
 while die=="false":
     while timing<=21000:
+        clog="close"
         act=input("what would you like to do?")
+        if act=="show stats":
+            print("physical health:", phealth,"/100, mental health:", mhealth,"/100,hunger:", hunger,"/100")
         if act=="desc":
-            n="open"
+            clog="open"
             desc=input("what would you like me to describe?")
             if desc=="medication":
                 print("your medication won't cure you but  it will help fight off the virus. It is important for you to take it on time")
@@ -55,13 +65,10 @@ while die=="false":
             phealth=phealth-25
         if act=="take":
             take=input("what would you like to take")
-            if take=="food":
-                    
+            if take=="food": 
                 eat=("you take out your food what would you like to do with it?")
                 if food>0:
-                        
-                    if eat=="eat":
-                            
+                    if eat=="eat":  
                         food=food-1
                         hunger=hunger+foodval[i]
                         foodval.remove(foodval[i])
@@ -117,7 +124,7 @@ while die=="false":
                         print("the  face mask is dirty. Clean it")
                 else:
                     print("re-enter")
-                    n="open"
+                    clog="open"
             elif take=="medication":
                 print("you took your meds")
                 time=timing//10
@@ -134,7 +141,7 @@ while die=="false":
                 h="gloves"
             else:
                 print("re-enter")
-                n="open"
+                clog="open"
         if act=="wash":
             wash=input("what would you like to wash?")
             if wash=="hands":
@@ -151,7 +158,7 @@ while die=="false":
                       
             else:
                 print("re-enter")
-                n="open"
+                clog="open"
         if act=="look":        
             print("You look around your room. There is your bed and your desk next to it. Text books are usually nested there but not today. You hav been forced to stay at home and school is out so there is not much to do. There is a cupboard above the desk and shelves bellow. The daunting kitchen is still behind you. Hopefully you have enough ingridients to make food. The window sill lies just above your stove.There are a few cupboars besides the stove and one sink.")
         #roaches is the variable that checks if there are still cockroaches
@@ -204,7 +211,7 @@ while die=="false":
                         print("no roach")
                 else:
                     print("please re-enter")
-                    n="Open"
+                    clog="Open"
             elif event=="cat":
                 print("There is some fur on the window sill.")
         if act=="go":
@@ -291,7 +298,7 @@ while die=="false":
                 i=i+1
             else:
                 print("please re-enter")
-                n="open"
+                clog="open"
         realtime=timing//100
         if realtime%4==0 and event=="cockroaches":
         
@@ -357,24 +364,29 @@ while die=="false":
                 print("you feel even worse than before.")
                 mhealth=mhealth-20
             if productive=="yes":
-                do=input("what would you like to do? would you like to read, draw or write")                  
-                if do=="read":
-                      print("you feel more vigorated after reading!")
-                      mhealth=mhealth+6                      
-                if do=="draw":
-                      print("you feel more vigorated after drawing!")
-                      mhealth=mhealth+random.randinnt(1,10)         
-                if do=="write":
-                      print("you feel more vigorated after reading!")
-                      mhealth=mhealth+6
-                else:
-                    print("re-enter")
+                g="true"
+                while g=="true":
+                    do=input("what would you like to do? would you like to read, draw or write")                  
+                    if do=="read":
+                          print("you feel more vigorated after reading!")
+                          mhealth=mhealth+6
+                          g="false"
+                    if do=="draw":
+                          print("you feel more vigorated after drawing!")
+                          mhealth=mhealth+random.randinnt(1,10)
+                          g="false"
+                    if do=="write":
+                          print("you feel more vigorated after reading!")
+                          mhealth=mhealth+6
+                          g="false"
+                    else:
+                        print("re-enter")
         if event=="grumbly grumble":
             if timing%100==0:
-                hungry=hungry-10
-        if timing%200==0 and event=!"cockroaches":
-            hungry=hungry-10
-        if cockroaches<1 and event=="cockroaches":
+                hunger=hunger-10
+        if timing%200==0 and event!="cockroaches":
+            hunger=hunger-10
+        if cockroaches==0 and event=="cockroaches":
             roaches="inactive"
             print("huzzah, all the roaches are dead")
 
@@ -388,7 +400,7 @@ while die=="false":
             print("you are mentally doing fine")
         if mhealth>0 and phealth<=50:  
             print("please take better mental care of yourself. Read a book or something.")
-        if mhhealth<=0: 
+        if mhealth<=0: 
             print("You are mentally unwell. You decide to sleep for the rest of your day. GAME OVER")
             die="true"
         if morningmed>1 or afternoonmed>1 or nightmed>1:              
@@ -400,17 +412,17 @@ while die=="false":
             print("you are physically doing fine")
         if phealth>0 and phealth<=50:  
             print("please take better care of yourself. I suggest trying to stay clean.")
-        if phhealth<=0:
+        if phealth<=0:
             print("You are mentally unwell. You decide to sleep for the rest of your day. GAME OVER")
             die="true"
         if roaches=="active":
             if h=="gloves":
                 rng1=random.randint(1,7)
-                if rng>=3 and rng<=5:
+                if rng1>=3 and rng1<=5:
                     gs="dirty"
             if f=="facemask":
-                rng=random.randint(1,7)
-                if rng>=1 and rng<=2:
+                rng2=random.randint(1,7)
+                if rng2>=1 and rng2<=2:
                     fms="dirty"
         if dirt>50:
             foodcondition="spoiled"
@@ -420,10 +432,12 @@ while die=="false":
             dirt=dirt+5
     
 
-        if n=="close":
+        if clog=="close":
             timing=timing+250
+        dog=(timing%1000)/250
+        log=dog*15
     
-        print("time is", timing//100,":", (timing%100)/250*15)
+        print("time is", timing//1000,":",log) 
     if mhealth>=50 and mhealth<=100:
         print("you did well mentally. Just stay in there. It  is all going to  be fine.")
     if mhealth>0 and mhealth<50:
@@ -437,7 +451,5 @@ while die=="false":
     if phealth>100:
         print("You did great physically, you might even be recovering at a rapid pace if I musy say myself.")
     if dirt>50:
-        print("also, take a bath please!"
-
-
-        
+        print("also, take a bath please!")
+    die="true"
